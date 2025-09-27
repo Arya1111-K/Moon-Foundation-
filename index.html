@@ -73,10 +73,9 @@
       z-index: 1;
       transition: opacity 1.5s ease, transform 1.5s ease;
       filter: drop-shadow(0 0 20px gold);
-
-      max-width: 150px;   /* constrain size */
+      max-width: 150px;
       max-height: 150px;
-      border-radius: 50%;  /* circular */
+      border-radius: 50%;
       object-fit: contain; 
     }
     .logo.show { 
@@ -120,6 +119,26 @@
       100% { transform: scaleY(1); opacity: 0.9; }
     }
 
+    /* Congratulatory Text */
+    .congrats-text {
+      position: absolute;
+      top: 65%;
+      left: 50%;
+      transform: translate(-50%, -20%);
+      text-align: center;
+      font-size: 1.5em;
+      color: #ffd700;
+      opacity: 0;
+      z-index: 3;
+      font-weight: bold;
+      text-shadow: 0 0 10px #fff, 0 0 20px #ffd700;
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+    .congrats-text.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
     /* Confetti */
     .confetti {
       position: absolute;
@@ -152,6 +171,12 @@
   <img src="MOON FOUNDATION_20250927_045948_0000.png" 
        alt="NGO Logo" class="logo" id="logo">
 
+  <!-- Congratulatory Text -->
+  <div class="congrats-text" id="congratsText">
+    Congratulations Nannu!<br>
+    We both have opened a NGO for people in need and animals.
+  </div>
+
   <!-- Candles -->
   <div class="candle left" id="candleLeft"><div class="flame"></div></div>
   <div class="candle right" id="candleRight"><div class="flame"></div></div>
@@ -167,6 +192,7 @@
     const candleLeft = document.getElementById('candleLeft');
     const candleRight = document.getElementById('candleRight');
     const bgMusic = document.getElementById('bgMusic');
+    const congratsText = document.getElementById('congratsText');
 
     scissorsBtn.addEventListener('click', () => {
       // Animate ribbons
@@ -180,7 +206,14 @@
       bgMusic.play();
 
       // Show logo
-      setTimeout(() => logo.classList.add('show'), 800);
+      setTimeout(() => {
+        logo.classList.add('show');
+      }, 800);
+
+      // Show congratulatory text
+      setTimeout(() => {
+        congratsText.classList.add('show');
+      }, 1500);
 
       // Light candles
       setTimeout(() => {
@@ -199,8 +232,21 @@
         document.body.appendChild(confetti);
         setTimeout(() => confetti.remove(), 3000);
       }
+
+      // Sparkle effect for text
+      setInterval(() => {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('confetti');
+        sparkle.style.width = sparkle.style.height = `${Math.random() * 6 + 4}px`;
+        sparkle.style.left = `${50 + (Math.random() * 30 - 15)}%`;
+        sparkle.style.top = `${65 + (Math.random() * 10 - 5)}%`;
+        sparkle.style.background = `hsl(${Math.random() * 360}, 100%, 70%)`;
+        sparkle.style.opacity = 1;
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1500);
+      }, 200);
     });
   </script>
 
 </body>
-  </html>
+</html>
